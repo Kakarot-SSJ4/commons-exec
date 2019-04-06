@@ -100,7 +100,7 @@ public class StreamPumper implements Runnable {
             finished = false;
         }
 
-        final byte[] buf = new byte[this.size];
+        final @SuppressWarnings("index") byte[] buf = new byte[this.size]; //this.size() is non negative
 
         int length;
         try {

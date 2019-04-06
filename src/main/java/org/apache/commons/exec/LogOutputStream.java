@@ -22,6 +22,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import org.checkerframework.checker.index.qual.*;
+
 /**
  * Base class to connect a logging system to the output and/or
  * error stream of then external process. The implementation
@@ -34,7 +36,7 @@ public abstract class LogOutputStream
   extends OutputStream {
 
     /** Initial buffer size. */
-    private static final int INTIAL_SIZE = 132;
+    private static final @NonNegative int INTIAL_SIZE = 132;
 
     /** Carriage return */
     private static final int CR = 0x0d;
@@ -128,11 +130,14 @@ public abstract class LogOutputStream
      * @throws java.io.IOException if the data cannot be written into the stream.
      * @see java.io.OutputStream#write(byte[], int, int)
      */
+    @SuppressWarnings("index")/* offset can reach maximum to the end of buffer as the loop ends when the end of buffer is reached or a line seperator char is found, hence offset is a valid index
+    In buffer.write(b, blockStartOffset, blockLength); blockLength > 0 ensures blockLength to be positive and blockStartOffset is the initial offset which is non negative 
+    */
     @Override
-    public void write(final byte[] b, final int off, final int len)
+    public void write(final byte[] b, final int off, final int len) 
             throws IOException {
         // find the line breaks and pass other chars through in blocks
-        int offset = off;
+        int offset = off; 
         int blockStartOffset = offset;
         int remaining = len;
         while (remaining > 0) {

@@ -28,6 +28,8 @@ import java.util.Vector;
 
 import org.apache.commons.exec.util.StringUtils;
 
+import org.checkerframework.common.value.qual.*;
+
 /**
  * CommandLine objects help handling command lines specifying processes to
  * execute. The class can be used to a command line by an application.
@@ -82,7 +84,9 @@ public class CommandLine {
         } else if (line.trim().length() == 0) {
             throw new IllegalArgumentException("Command line can not be empty");
         } else {
-            final String[] tmp = translateCommandline(line);
+            final @SuppressWarnings("all") String @MinLen(1) [] tmp = translateCommandline(line); /* as ensured by the previous if statements, suppressing because 
+            translateCommandLine() isn't annotated due to the above two cases
+            */ 
 
             final CommandLine cl = new CommandLine(tmp[0]);
             cl.setSubstitutionMap(substitutionMap);
@@ -294,10 +298,13 @@ public class CommandLine {
      *
      * @return The command line as an string array
      */
+    @SuppressWarnings("index")/*
+    result.length - 1 is non negative
+    */
     public String[] toStrings() {
-        final String[] result = new String[arguments.size() + 1];
+        final @SuppressWarnings("all") String @MinLen(1) [] result = new String[arguments.size() + 1]; // minimum value of arguments.size() + 1 is 1
         result[0] = this.getExecutable();
-        System.arraycopy(getArguments(), 0, result, 1, result.length-1);
+        System.arraycopy(getArguments(), 0, result, 1, result.length-1); // result.length - 1 is non negative
         return result;
     }
 

@@ -29,6 +29,10 @@ import java.util.Set;
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.util.StringUtils;
 
+import org.checkerframework.checker.index.qual.*;
+import org.checkerframework.common.value.qual.*;
+
+
 /**
  * A command launcher for VMS that writes the command to a temporary DCL script
  * before launching commands. This is due to limitations of both the DCL
@@ -117,12 +121,12 @@ public class VmsCommandLauncher extends Java13CommandLauncher {
             if (cmd.isFile()) {// We assume it is it a script file
                 out.print("$ @");
                 // This is a bit crude, but seems to work
-                final String parts[] = StringUtils.split(command,"/");
+                final @SuppressWarnings("all") String @MinLen(2) [] parts = StringUtils.split(command,"/"); // cmd.isFile() => script file, hence the device and the top level directory will be present, seperated by a '/'. Suppressing assignment type incompatible because RHS isn't annotated.
                 out.print(parts[0]); // device
                 out.print(":[");
                 out.print(parts[1]); // top level directory
-                final int lastPart = parts.length-1;
-                for (int i=2; i< lastPart; i++) {
+                final @IndexFor("parts") int lastPart = parts.length-1;
+                for (@SuppressWarnings("index") @IndexFor("parts") int i=2; i< lastPart; i++) { // i < lastPart ensures safe usage of i as an index
                     out.print(".");
                     out.print(parts[i]);
                 }

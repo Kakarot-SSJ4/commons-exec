@@ -67,6 +67,9 @@ public class StringUtils {
      *            ignore a key not found in vars or throw a RuntimeException?
      * @return String target string with replacements.
      */
+    @SuppressWarnings("index")/* According to the documentation, argStr has the form ${variable}, hence if charAt(cIdx) is $, charAt(cIdx + 1) is valid
+     del = argStr.charAt(cIdx); //  According to the documentation, argStr has the form ${variable}, so here the maximum value of cIdx can be argStr.length() - 1 only, as the loop breaks if the character is not one of the valid variables
+    */
     public static StringBuffer stringSubstitution(final String argStr, final Map<? super String, ?> vars, final boolean isLenient) {
 
         final StringBuffer argBuf = new StringBuffer();
@@ -90,7 +93,7 @@ public class StringUtils {
 
                 case '$':
                     final StringBuilder nameBuf = new StringBuilder();
-                    del = argStr.charAt(cIdx + 1);
+                    del = argStr.charAt(cIdx + 1); //  According to the documentation, argStr has the form ${variable}, hence if charAt(cIdx) is $, charAt(cIdx + 1) is valid
                     if (del == '{') {
                         cIdx++;
 
@@ -129,7 +132,7 @@ public class StringUtils {
                                 }
                             }
 
-                            del = argStr.charAt(cIdx);
+                            del = argStr.charAt(cIdx); //  According to the documentation, argStr has the form ${variable}, so here the maximum value of cIdx can be argStr.length() - 1 only, as the loop breaks if the character is not one of the valid variables
 
                             if (del != '}') {
                                 throw new RuntimeException("Delimiter not found for : " + nameBuf);

@@ -22,6 +22,9 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.checkerframework.checker.index.qual.*;
+import org.checkerframework.common.value.qual.*;
+
 //import org.apache.commons.exec.OS;
 
 /**
@@ -56,12 +59,13 @@ public class EnvironmentUtils
      * @return array of key=value assignment strings or {@code null} if and only if
      *     the input map was {@code null}
      */
+    @SuppressWarnings("index") // i is increased till it reaches the number of elements in environment - 1 (when used in result[i]), then increased to number of elements in environment but not used in result[i]
     public static String[] toStrings(final Map<String, String> environment) {
         if (environment == null) {
             return null;
         }
         final String[] result = new String[environment.size()];
-        int i = 0;
+        @IndexFor("result") int i = 0;
         for (final Entry<String, String> entry : environment.entrySet()) {
             final String key  = entry.getKey() == null ? "" : entry.getKey().toString();
             final String value = entry.getValue() == null ? "" : entry.getValue().toString();
@@ -92,7 +96,9 @@ public class EnvironmentUtils
      * @param keyAndValue the key/value pair 
      */
     public static void addVariableToEnvironment(final Map<String, String> environment, final String keyAndValue) {
-        final String[] parsedVariable = parseEnvironmentVariable(keyAndValue);        
+        final @SuppressWarnings("all") String @MinLen(2) [] parsedVariable = parseEnvironmentVariable(keyAndValue); /* either throws an error
+        or is of length 2 as in parseEnvironmentVariable(), suppressing because RHS is not annotated
+        */        
         environment.put(parsedVariable[0], parsedVariable[1]);
     }
     
