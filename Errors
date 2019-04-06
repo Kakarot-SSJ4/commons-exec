@@ -1,0 +1,82 @@
+Errors in the first compilation:
+
+[INFO] 21 errors 
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  53.931 s
+[INFO] Finished at: 2019-04-06T22:51:31+05:30
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.6.1:compile (default-compile) on project commons-exec: Compilation failure: Compilation failure: 
+[ERROR] /home/kakarot/unannotated/commons-exec/src/main/java/org/apache/commons/exec/CommandLine.java:[87,56] [array.access.unsafe.high.constant] Potentially unsafe array access: the constant index 0 could be larger than the array's bound
+[ERROR]   found   : @UnknownVal String @UnknownVal []
+[ERROR]   required: @MinLen("1") -- an array guaranteed to have at least 1 elements
+[ERROR] /home/kakarot/unannotated/commons-exec/src/main/java/org/apache/commons/exec/CommandLine.java:[299,16] [array.access.unsafe.high.constant] Potentially unsafe array access: the constant index 0 could be larger than the array's bound
+[ERROR]   found   : @UnknownVal String @UnknownVal []
+[ERROR]   required: @MinLen("1") -- an array guaranteed to have at least 1 elements
+[ERROR] /home/kakarot/unannotated/commons-exec/src/main/java/org/apache/commons/exec/CommandLine.java:[300,69] [argument.type.incompatible] incompatible types in argument.
+[ERROR]   found   : @GTENegativeOne int
+[ERROR]   required: @NonNegative int
+[ERROR] /home/kakarot/unannotated/commons-exec/src/main/java/org/apache/commons/exec/Watchdog.java:[81,26] [argument.type.incompatible] incompatible types in argument.
+[ERROR]   found   : @LowerBoundUnknown long
+[ERROR]   required: @NonNegative long
+[ERROR] /home/kakarot/unannotated/commons-exec/src/main/java/org/apache/commons/exec/environment/EnvironmentUtils.java:[68,20] [array.access.unsafe.high.range] Potentially unsafe array access: the index could be larger than the array's bound
+[ERROR]   index type found: @IntRange(from=-2147483648, to=9223372036854775807) int
+[ERROR]   array type found: @UnknownVal String @UnknownVal []
+[ERROR]   required        : index of type @IndexFor("result") or @LTLengthOf("result"), or array of type @MinLen(-9223372036854775808)
+[ERROR] /home/kakarot/unannotated/commons-exec/src/main/java/org/apache/commons/exec/environment/EnvironmentUtils.java:[96,40] [array.access.unsafe.high.constant] Potentially unsafe array access: the constant index 0 could be larger than the array's bound
+[ERROR]   found   : @UnknownVal String @UnknownVal []
+[ERROR]   required: @MinLen("1") -- an array guaranteed to have at least 1 elements
+[ERROR] /home/kakarot/unannotated/commons-exec/src/main/java/org/apache/commons/exec/environment/EnvironmentUtils.java:[96,59] [array.access.unsafe.high.constant] Potentially unsafe array access: the constant index 1 could be larger than the array's bound
+[ERROR]   found   : @UnknownVal String @UnknownVal []
+[ERROR]   required: @MinLen("2") -- an array guaranteed to have at least 2 elements
+[ERROR] /home/kakarot/unannotated/commons-exec/src/main/java/org/apache/commons/exec/LogOutputStream.java:[47,7] [argument.type.incompatible] incompatible types in argument.
+[ERROR]   found   : @LowerBoundUnknown int
+[ERROR]   required: @NonNegative int
+[ERROR] /home/kakarot/unannotated/commons-exec/src/main/java/org/apache/commons/exec/LogOutputStream.java:[139,39] [array.access.unsafe.low] Potentially unsafe array access: the index could be negative.
+[ERROR]   found   : @LowerBoundUnknown int
+[ERROR]   required: an integer >= 0 (@NonNegative or @Positive)
+[ERROR] /home/kakarot/unannotated/commons-exec/src/main/java/org/apache/commons/exec/LogOutputStream.java:[139,58] [array.access.unsafe.low] Potentially unsafe array access: the index could be negative.
+[ERROR]   found   : @LowerBoundUnknown int
+[ERROR]   required: an integer >= 0 (@NonNegative or @Positive)
+[ERROR] /home/kakarot/unannotated/commons-exec/src/main/java/org/apache/commons/exec/LogOutputStream.java:[146,33] [argument.type.incompatible] incompatible types in argument.
+[ERROR]   found   : @LowerBoundUnknown int
+[ERROR]   required: @NonNegative int
+[ERROR] /home/kakarot/unannotated/commons-exec/src/main/java/org/apache/commons/exec/LogOutputStream.java:[146,51] [argument.type.incompatible] incompatible types in argument.
+[ERROR]   found   : @UpperBoundUnknown int
+[ERROR]   required: @LTEqLengthOf("b") int
+[ERROR] /home/kakarot/unannotated/commons-exec/src/main/java/org/apache/commons/exec/LogOutputStream.java:[148,40] [array.access.unsafe.low] Potentially unsafe array access: the index could be negative.
+[ERROR]   found   : @LowerBoundUnknown int
+[ERROR]   required: an integer >= 0 (@NonNegative or @Positive)
+[ERROR] /home/kakarot/unannotated/commons-exec/src/main/java/org/apache/commons/exec/LogOutputStream.java:[148,59] [array.access.unsafe.low] Potentially unsafe array access: the index could be negative.
+[ERROR]   found   : @LowerBoundUnknown int
+[ERROR]   required: an integer >= 0 (@NonNegative or @Positive)
+[ERROR] /home/kakarot/unannotated/commons-exec/src/main/java/org/apache/commons/exec/LogOutputStream.java:[149,25] [array.access.unsafe.low] Potentially unsafe array access: the index could be negative.
+[ERROR]   found   : @LowerBoundUnknown int
+[ERROR]   required: an integer >= 0 (@NonNegative or @Positive)
+[ERROR] /home/kakarot/unannotated/commons-exec/src/main/java/org/apache/commons/exec/util/StringUtils.java:[93,46] [argument.type.incompatible] incompatible types in argument.
+[ERROR]   found   : @LTEqLengthOf({"argStr", "null"}) int
+[ERROR]   required: @LTLengthOf(value="argStr", offset={}) int
+[ERROR] /home/kakarot/unannotated/commons-exec/src/main/java/org/apache/commons/exec/util/StringUtils.java:[132,49] [argument.type.incompatible] incompatible types in argument.
+[ERROR]   found   : @LTLengthOf(value={"argStr", "null"}, offset={"-2", "-2"}) int
+[ERROR]   required: @LTLengthOf(value="argStr", offset={}) int
+[ERROR] /home/kakarot/unannotated/commons-exec/src/main/java/org/apache/commons/exec/launcher/VmsCommandLauncher.java:[121,33] [array.access.unsafe.high.constant] Potentially unsafe array access: the constant index 0 could be larger than the array's bound
+[ERROR]   found   : @UnknownVal String @UnknownVal []
+[ERROR]   required: @MinLen("1") -- an array guaranteed to have at least 1 elements
+[ERROR] /home/kakarot/unannotated/commons-exec/src/main/java/org/apache/commons/exec/launcher/VmsCommandLauncher.java:[123,33] [array.access.unsafe.high.constant] Potentially unsafe array access: the constant index 1 could be larger than the array's bound
+[ERROR]   found   : @UnknownVal String @UnknownVal []
+[ERROR]   required: @MinLen("2") -- an array guaranteed to have at least 2 elements
+[ERROR] /home/kakarot/unannotated/commons-exec/src/main/java/org/apache/commons/exec/launcher/VmsCommandLauncher.java:[130,33] [array.access.unsafe.low] Potentially unsafe array access: the index could be negative.
+[ERROR]   found   : @GTENegativeOne int
+[ERROR]   required: an integer >= 0 (@NonNegative or @Positive)
+[ERROR] /home/kakarot/unannotated/commons-exec/src/main/java/org/apache/commons/exec/StreamPumper.java:[103,41] [array.length.negative] Variable used in array creation could be negative.
+[ERROR]   found   : @LowerBoundUnknown int
+[ERROR]   required: an integer >= 0 (@NonNegative or @Positive)
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
