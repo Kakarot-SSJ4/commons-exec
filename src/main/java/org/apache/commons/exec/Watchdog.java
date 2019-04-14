@@ -76,7 +76,7 @@ public class Watchdog implements Runnable {
         final long startTime = System.currentTimeMillis();
         boolean isWaiting;
         synchronized (this) {
-            long timeLeft = timeout - (System.currentTimeMillis() - startTime); // 
+            long timeLeft = timeout - (System.currentTimeMillis() - startTime);
             isWaiting = timeLeft > 0;
             while (!stopped && isWaiting) {
                 try {

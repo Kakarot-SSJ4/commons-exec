@@ -59,7 +59,7 @@ public class EnvironmentUtils
      * @return array of key=value assignment strings or {@code null} if and only if
      *     the input map was {@code null}
      */
-    @SuppressWarnings("index") // i is increased till it reaches the number of elements in environment - 1 (when used in result[i]), then increased to number of elements in environment but not used in result[i]
+    @SuppressWarnings("index") // result[i] = key + "=" + value; i is increased till it reaches the number of elements in environment - 1 (when used in result[i]), then increased to number of elements in environment but not used in result[i]
     public static String[] toStrings(final Map<String, String> environment) {
         if (environment == null) {
             return null;
@@ -97,7 +97,7 @@ public class EnvironmentUtils
      */
     public static void addVariableToEnvironment(final Map<String, String> environment, final String keyAndValue) {
         final @SuppressWarnings("all") String @MinLen(2) [] parsedVariable = parseEnvironmentVariable(keyAndValue); /* either throws an error
-        or is of length 2 as in parseEnvironmentVariable(), suppressing because RHS is not annotated
+        or is of length 2 as in parseEnvironmentVariable()
         */        
         environment.put(parsedVariable[0], parsedVariable[1]);
     }

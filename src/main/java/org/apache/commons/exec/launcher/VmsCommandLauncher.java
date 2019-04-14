@@ -121,7 +121,7 @@ public class VmsCommandLauncher extends Java13CommandLauncher {
             if (cmd.isFile()) {// We assume it is it a script file
                 out.print("$ @");
                 // This is a bit crude, but seems to work
-                final @SuppressWarnings("all") String @MinLen(2) [] parts = StringUtils.split(command,"/"); // cmd.isFile() => script file, hence the device and the top level directory will be present, seperated by a '/'. Suppressing assignment type incompatible because RHS isn't annotated.
+                final @SuppressWarnings("all") String @MinLen(2) [] parts = StringUtils.split(command,"/"); // cmd.isFile() => script file, hence the device and the top level directory will be present, seperated by a '/'
                 out.print(parts[0]); // device
                 out.print(":[");
                 out.print(parts[1]); // top level directory

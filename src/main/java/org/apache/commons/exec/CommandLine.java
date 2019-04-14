@@ -84,9 +84,7 @@ public class CommandLine {
         } else if (line.trim().length() == 0) {
             throw new IllegalArgumentException("Command line can not be empty");
         } else {
-            final @SuppressWarnings("all") String @MinLen(1) [] tmp = translateCommandline(line); /* as ensured by the previous if statements, suppressing because 
-            translateCommandLine() isn't annotated due to the above two cases
-            */ 
+            @SuppressWarnings("all") final String @MinLen(1) [] tmp = translateCommandline(line); // because argument to translateCommandLine is non-empty, its result is non-empty
 
             final CommandLine cl = new CommandLine(tmp[0]);
             cl.setSubstitutionMap(substitutionMap);
@@ -298,11 +296,11 @@ public class CommandLine {
      *
      * @return The command line as an string array
      */
-    @SuppressWarnings("index")/*
-    result.length - 1 is non negative
+    @SuppressWarnings("all") /* final String @MinLen(1) [] result = new String[arguments.size() + 1]; // minimum value of arguments.size() + 1 is 1
+    System.arraycopy(getArguments(), 0, result, 1, result.length-1); // result.length - 1 is non negative
     */
     public String[] toStrings() {
-        final @SuppressWarnings("all") String @MinLen(1) [] result = new String[arguments.size() + 1]; // minimum value of arguments.size() + 1 is 1
+        final String @MinLen(1) [] result = new String[arguments.size() + 1]; // minimum value of arguments.size() + 1 is 1
         result[0] = this.getExecutable();
         System.arraycopy(getArguments(), 0, result, 1, result.length-1); // result.length - 1 is non negative
         return result;
