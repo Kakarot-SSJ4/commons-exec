@@ -23,6 +23,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import org.apache.commons.exec.util.DebugUtils;
+import org.checkerframework.checker.index.qual.*;
 
 /**
  * Copies all data from an input stream to an output stream.
@@ -41,7 +42,7 @@ public class StreamPumper implements Runnable {
     private final OutputStream os;
 
     /** the size of the internal buffer for copying the streams */ 
-    private final int size;
+    private final @NonNegative int size;
 
     /** was the end of the stream reached */
     private boolean finished;
@@ -100,7 +101,7 @@ public class StreamPumper implements Runnable {
             finished = false;
         }
 
-        final @SuppressWarnings("index") byte[] buf = new byte[this.size]; //this.size() is non negative
+        final byte[] buf = new byte[this.size];
 
         int length;
         try {

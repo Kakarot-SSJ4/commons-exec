@@ -65,7 +65,7 @@ public class EnvironmentUtils
             return null;
         }
         final String[] result = new String[environment.size()];
-        @IndexFor("result") int i = 0;
+        int i = 0;
         for (final Entry<String, String> entry : environment.entrySet()) {
             final String key  = entry.getKey() == null ? "" : entry.getKey().toString();
             final String value = entry.getValue() == null ? "" : entry.getValue().toString();
@@ -96,9 +96,7 @@ public class EnvironmentUtils
      * @param keyAndValue the key/value pair 
      */
     public static void addVariableToEnvironment(final Map<String, String> environment, final String keyAndValue) {
-        final @SuppressWarnings("all") String @MinLen(2) [] parsedVariable = parseEnvironmentVariable(keyAndValue); /* either throws an error
-        or is of length 2 as in parseEnvironmentVariable()
-        */        
+        final String[] parsedVariable = parseEnvironmentVariable(keyAndValue);     
         environment.put(parsedVariable[0], parsedVariable[1]);
     }
     
@@ -109,7 +107,7 @@ public class EnvironmentUtils
      * @param keyAndValue the key/value pair
      * @return a String[] containing the key and value
      */
-    private static String[] parseEnvironmentVariable(final String keyAndValue) {
+    private static String @ArrayLen(2) [] parseEnvironmentVariable(final String keyAndValue) {
         final int index = keyAndValue.indexOf('=');
         if (index == -1) {
             throw new IllegalArgumentException(

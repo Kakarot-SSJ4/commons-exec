@@ -28,6 +28,7 @@ import java.util.Vector;
 
 import org.apache.commons.exec.util.StringUtils;
 
+import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.common.value.qual.*;
 
 /**
@@ -84,7 +85,7 @@ public class CommandLine {
         } else if (line.trim().length() == 0) {
             throw new IllegalArgumentException("Command line can not be empty");
         } else {
-            @SuppressWarnings("all") final String @MinLen(1) [] tmp = translateCommandline(line); // because argument to translateCommandLine is non-empty, its result is non-empty
+            @SuppressWarnings("value") final String @MinLen(1) [] tmp = translateCommandline(line); // because argument to translateCommandLine is non-empty, its result is non-empty
 
             final CommandLine cl = new CommandLine(tmp[0]);
             cl.setSubstitutionMap(substitutionMap);
@@ -293,16 +294,19 @@ public class CommandLine {
 
     /**
      * Returns the command line as an array of strings.
-     *
+     *`
      * @return The command line as an string array
      */
-    @SuppressWarnings("all") /* final String @MinLen(1) [] result = new String[arguments.size() + 1]; // minimum value of arguments.size() + 1 is 1
-    System.arraycopy(getArguments(), 0, result, 1, result.length-1); // result.length - 1 is non negative
-    */
     public String[] toStrings() {
-        final String @MinLen(1) [] result = new String[arguments.size() + 1]; // minimum value of arguments.size() + 1 is 1
+        try{
+        @SuppressWarnings({"value","index"})final String @SameLen("this.getArguments()") @MinLen(1) [] result = new String[arguments.size() + 1]; // minimum value of arguments.size() + 1 is 1 (except when arguments.size() is INTEGER_MAX), and this.getArguments() returns a String array of length arguments.size()  
+        }
+        catch(NegativeArraySizeException e){
+            System.out.println("Array length negative");
+            return new String[0];
+        }
         result[0] = this.getExecutable();
-        System.arraycopy(getArguments(), 0, result, 1, result.length-1); // result.length - 1 is non negative
+        System.arraycopy(getArguments(), 0, result, 1, result.length-1);
         return result;
     }
 
