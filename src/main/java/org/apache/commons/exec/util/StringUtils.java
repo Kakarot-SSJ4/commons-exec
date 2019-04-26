@@ -90,7 +90,9 @@ public class StringUtils {
 
                 case '$':
                     final StringBuilder nameBuf = new StringBuilder();
-                    del = cIdx == (argStrLength - 1) ? null : argStr.charAt(cIdx + 1); // $ may as well be the last character in the string, hence there will be no character at cIdx + 1
+                    if (cIdx == (argStrLength - 1))
+                        break;
+                    del = argStr.charAt(cIdx + 1); // $ may as well be the last character in the string, hence there will be no character at cIdx + 1
                     if (del == '{') {
                         cIdx++;
 
