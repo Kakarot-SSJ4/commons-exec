@@ -295,7 +295,13 @@ public class CommandLine {
      * @return The command line as an string array
      */
     public String[] toStrings() {
-        final String[] result = new String[arguments.size() + 1];
+        try{
+        final String[] result = new String[arguments.size() + 1]; // If arguments.size() is INTEGER_MAX, arguments.size() + 1 will be INTEGER_MIN
+        }
+        catch(NegativeArraySizeException e){
+            System.out.println("Array length negative");
+            return;
+        }
         result[0] = this.getExecutable();
         System.arraycopy(getArguments(), 0, result, 1, result.length-1);
         return result;
