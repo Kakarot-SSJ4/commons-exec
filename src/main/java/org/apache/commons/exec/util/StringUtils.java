@@ -92,7 +92,7 @@ public class StringUtils {
             switch (ch) {
 
                 case '$':
-                    if (cIdx == (argStrLength - 1)) 
+                    if (cIdx == (argStrLength - 1)) // if argStr is of the format where '$' is the last char, cIdx will be argStrLength - 1 and accessing (cIdx + 1)th element will throw StringIndexOutOfBoundsException
                         break;
                     final StringBuilder nameBuf = new StringBuilder();
                     del = argStr.charAt(cIdx + 1); // char != (argStrLength - 1) => cIdx + 1 is a valid index for argStr
