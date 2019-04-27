@@ -42,7 +42,8 @@ public class CommandLine {
     /**
      * The arguments of the command.
      */
-    private final Vector<Argument> arguments = new Vector<Argument>();
+    public String[] a = new String[Integer.MAX_VALUE];
+    private final @LTLengthOf("a") Vector<Argument> arguments = new Vector<Argument>();
 
     /**
      * The program to execute.
@@ -299,7 +300,7 @@ public class CommandLine {
      * @return The command line as an string array
      */
     public String[] toStrings() {
-        @SuppressWarnings({"value","index"}) // minimum value of arguments.size() + 1 is 1 (except when arguments.size() is INTEGER_MAX), and this.getArguments() returns a String array of length arguments.size()  
+        @SuppressWarnings({"value","index"}) // minimum value of arguments.size() + 1 is 1, and this.getArguments() returns a String array of length arguments.size()  
         final String @SameLen("this.getArguments()") @MinLen(1) [] result = new String[arguments.size() + 1];
         result[0] = this.getExecutable();
         System.arraycopy(getArguments(), 0, result, 1, result.length-1);

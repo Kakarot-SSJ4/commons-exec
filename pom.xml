@@ -176,6 +176,7 @@
         <arg>-Xbootclasspath/p:${annotatedJdk}</arg>
         <!-- -Awarns turns type-checking warnings into errors. -->
         <!-- <arg>-Awarns</arg> -->
+        <arg>-AskipUses=java\.util\.Vector</arg>
       </compilerArgs>
     </configuration>
   </plugin>

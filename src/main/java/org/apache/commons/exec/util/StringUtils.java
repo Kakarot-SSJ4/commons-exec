@@ -92,10 +92,10 @@ public class StringUtils {
             switch (ch) {
 
                 case '$':
-                    if (cIdx == (argStrLength - 1)) // if argStr is of the format where '$' is the last char, cIdx will be argStrLength - 1 and accessing (cIdx + 1)th element will throw StringIndexOutOfBoundsException
+                    if (cIdx == (argStrLength - 1)) 
                         break;
                     final StringBuilder nameBuf = new StringBuilder();
-                    del = argStr.charAt(cIdx + 1); // char != (argStrLength - 1) => cIdx + 1 is a valid index for argStr
+                    del = argStr.charAt(cIdx + 1); //  According to the documentation, argStr has the form ${variable}, hence if charAt(cIdx) is $, charAt(cIdx + 1) is valid
                     if (del == '{') {
                         cIdx++;
 
