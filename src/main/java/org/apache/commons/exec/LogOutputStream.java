@@ -130,14 +130,14 @@ public abstract class LogOutputStream
      * @throws java.io.IOException if the data cannot be written into the stream.
      * @see java.io.OutputStream#write(byte[], int, int)
      */
-    @SuppressWarnings("index")/* offset can reach maximum to the end of buffer as the loop ends when the end of buffer is reached or a line seperator char is found, hence offset is a valid index
-    In buffer.write(b, blockStartOffset, blockLength); blockLength > 0 ensures blockLength to be positive and blockStartOffset is the initial offset which is non negative 
+    @SuppressWarnings("index") /* remaining > 0 => offset is a valid index for b wherever used
+    remaining > 0 & offset++ => offset is @IndexOrHigh("b")
     */
     @Override
-    public void write(final byte[] b, final int off, final int len) 
+    public void write(final byte[] b, final @NonNegative @LTEqLengthOf("#1") int off, final @NonNegative @LTEqLengthOf("#1") int len) 
             throws IOException {
         // find the line breaks and pass other chars through in blocks
-        int offset = off; 
+        @IndexOrHigh("b") int offset = off; 
         int blockStartOffset = offset;
         int remaining = len;
         while (remaining > 0) {

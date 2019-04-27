@@ -85,7 +85,8 @@ public class CommandLine {
         } else if (line.trim().length() == 0) {
             throw new IllegalArgumentException("Command line can not be empty");
         } else {
-            @SuppressWarnings("value") final String @MinLen(1) [] tmp = translateCommandline(line); // because argument to translateCommandLine is non-empty, its result is non-empty
+            @SuppressWarnings("value") // because argument to translateCommandLine is non-empty, its result is non-empty
+            final String @MinLen(1) [] tmp = translateCommandline(line);
 
             final CommandLine cl = new CommandLine(tmp[0]);
             cl.setSubstitutionMap(substitutionMap);
@@ -294,17 +295,12 @@ public class CommandLine {
 
     /**
      * Returns the command line as an array of strings.
-     *`
+     *
      * @return The command line as an string array
      */
     public String[] toStrings() {
-        try{
-        @SuppressWarnings({"value","index"})final String @SameLen("this.getArguments()") @MinLen(1) [] result = new String[arguments.size() + 1]; // minimum value of arguments.size() + 1 is 1 (except when arguments.size() is INTEGER_MAX), and this.getArguments() returns a String array of length arguments.size()  
-        }
-        catch(NegativeArraySizeException e){
-            System.out.println("Array length negative");
-            return new String[0];
-        }
+        @SuppressWarnings({"value","index"}) // minimum value of arguments.size() + 1 is 1 (except when arguments.size() is INTEGER_MAX), and this.getArguments() returns a String array of length arguments.size()  
+        final String @SameLen("this.getArguments()") @MinLen(1) [] result = new String[arguments.size() + 1];
         result[0] = this.getExecutable();
         System.arraycopy(getArguments(), 0, result, 1, result.length-1);
         return result;

@@ -71,6 +71,7 @@ public class Watchdog implements Runnable {
         stopped = true;
         notifyAll();
     }
+    
     @SuppressWarnings("index") // isWaiting = timeLeft > 0 => timeLeft is positive in wait(timeLeft)
     public void run() {
         final long startTime = System.currentTimeMillis();

@@ -59,13 +59,13 @@ public class EnvironmentUtils
      * @return array of key=value assignment strings or {@code null} if and only if
      *     the input map was {@code null}
      */
-    @SuppressWarnings("index") // result[i] = key + "=" + value; i is increased till it reaches the number of elements in environment - 1 (when used in result[i]), then increased to number of elements in environment but not used in result[i]
+    @SuppressWarnings("index") // i fails to be @IndexOrHigh("result") when result has size 0, when environment.size() = null, which is handled appropriately 
     public static String[] toStrings(final Map<String, String> environment) {
         if (environment == null) {
             return null;
         }
         final String[] result = new String[environment.size()];
-        int i = 0;
+        @IndexOrHigh("result") int i = 0;
         for (final Entry<String, String> entry : environment.entrySet()) {
             final String key  = entry.getKey() == null ? "" : entry.getKey().toString();
             final String value = entry.getValue() == null ? "" : entry.getValue().toString();
