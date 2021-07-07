@@ -28,7 +28,6 @@ import org.apache.commons.exec.environment.EnvironmentUtils;
 import org.junit.Test;
 
 /**
- * @version $Id$
  */
 public class MapUtilTest {
     /**
@@ -37,7 +36,7 @@ public class MapUtilTest {
     @Test
     public void testCopyMap() throws Exception {
 
-        final HashMap<String, String> procEnvironment = new HashMap<String, String>();
+        final HashMap<String, String> procEnvironment = new HashMap<>();
         procEnvironment.put("JAVA_HOME", "/usr/opt/java");
 
         final Map<String, String> result = MapUtils.copy(procEnvironment);
@@ -46,7 +45,7 @@ public class MapUtilTest {
         assertEquals("/usr/opt/java", result.get("JAVA_HOME"));
 
         result.remove("JAVA_HOME");
-        assertTrue(result.size() == 0);
+        assertTrue(result.isEmpty());
         assertTrue(procEnvironment.size() == 1);
     }
 
@@ -57,7 +56,7 @@ public class MapUtilTest {
     public void testMergeMap() throws Exception {
 
         final Map<String, String> procEnvironment = EnvironmentUtils.getProcEnvironment();
-        final HashMap<String, String> applicationEnvironment = new HashMap<String, String>();
+        final HashMap<String, String> applicationEnvironment = new HashMap<>();
 
         applicationEnvironment.put("appMainClass", "foo.bar.Main");
         final Map<String, String> result = MapUtils.merge(procEnvironment, applicationEnvironment);
@@ -71,7 +70,7 @@ public class MapUtilTest {
     @Test
     public void testPrefixMap() throws Exception {
 
-        final HashMap<String, String> procEnvironment = new HashMap<String, String>();
+        final HashMap<String, String> procEnvironment = new HashMap<>();
         procEnvironment.put("JAVA_HOME", "/usr/opt/java");
 
         final Map<String, String> result =

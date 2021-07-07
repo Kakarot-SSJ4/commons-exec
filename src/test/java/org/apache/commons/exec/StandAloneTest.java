@@ -1,4 +1,4 @@
-/* 
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  *  contributor license agreements.  See the NOTICE file distributed with
  *  this work for additional information regarding copyright ownership.
@@ -29,7 +29,6 @@ import org.junit.Test;
  * Placeholder for mailing list question - provided a minimal test case
  * to answer the question as sel-contained regression test.
  *
- * @version $Id$
  */
 public class StandAloneTest {
 

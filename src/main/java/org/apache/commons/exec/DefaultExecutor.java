@@ -43,7 +43,6 @@ import java.util.Map;
  * int exitvalue = exec.execute(cl);
  * </pre>
  *
- * @version $Id$
  */
 public class DefaultExecutor implements Executor {
 
@@ -62,7 +61,7 @@ public class DefaultExecutor implements Executor {
     /** launches the command in a new process */
     private final CommandLauncher launcher;
 
-    /** optional cleanup of started processes */ 
+    /** optional cleanup of started processes */
     private ProcessDestroyer processDestroyer;
 
     /** worker thread for asynchronous execution */
@@ -92,6 +91,7 @@ public class DefaultExecutor implements Executor {
     /**
      * @see org.apache.commons.exec.Executor#getStreamHandler()
      */
+    @Override
     public ExecuteStreamHandler getStreamHandler() {
         return streamHandler;
     }
@@ -99,6 +99,7 @@ public class DefaultExecutor implements Executor {
     /**
      * @see org.apache.commons.exec.Executor#setStreamHandler(org.apache.commons.exec.ExecuteStreamHandler)
      */
+    @Override
     public void setStreamHandler(final ExecuteStreamHandler streamHandler) {
         this.streamHandler = streamHandler;
     }
@@ -106,6 +107,7 @@ public class DefaultExecutor implements Executor {
     /**
      * @see org.apache.commons.exec.Executor#getWatchdog()
      */
+    @Override
     public ExecuteWatchdog getWatchdog() {
         return watchdog;
     }
@@ -113,6 +115,7 @@ public class DefaultExecutor implements Executor {
     /**
      * @see org.apache.commons.exec.Executor#setWatchdog(org.apache.commons.exec.ExecuteWatchdog)
      */
+    @Override
     public void setWatchdog(final ExecuteWatchdog watchDog) {
         this.watchdog = watchDog;
     }
@@ -120,6 +123,7 @@ public class DefaultExecutor implements Executor {
     /**
      * @see org.apache.commons.exec.Executor#getProcessDestroyer()
      */
+    @Override
     public ProcessDestroyer getProcessDestroyer() {
       return this.processDestroyer;
     }
@@ -127,6 +131,7 @@ public class DefaultExecutor implements Executor {
     /**
      * @see org.apache.commons.exec.Executor#setProcessDestroyer(ProcessDestroyer)
      */
+    @Override
     public void setProcessDestroyer(final ProcessDestroyer processDestroyer) {
       this.processDestroyer = processDestroyer;
     }
@@ -134,6 +139,7 @@ public class DefaultExecutor implements Executor {
     /**
      * @see org.apache.commons.exec.Executor#getWorkingDirectory()
      */
+    @Override
     public File getWorkingDirectory() {
         return workingDirectory;
     }
@@ -141,6 +147,7 @@ public class DefaultExecutor implements Executor {
     /**
      * @see org.apache.commons.exec.Executor#setWorkingDirectory(java.io.File)
      */
+    @Override
     public void setWorkingDirectory(final File dir) {
         this.workingDirectory = dir;
     }
@@ -148,6 +155,7 @@ public class DefaultExecutor implements Executor {
     /**
      * @see org.apache.commons.exec.Executor#execute(CommandLine)
      */
+    @Override
     public int execute(final CommandLine command) throws ExecuteException,
             IOException {
         return execute(command, (Map<String, String>) null);
@@ -156,13 +164,14 @@ public class DefaultExecutor implements Executor {
     /**
      * @see org.apache.commons.exec.Executor#execute(CommandLine, java.util.Map)
      */
+    @Override
     public int execute(final CommandLine command, final Map<String, String> environment)
             throws ExecuteException, IOException {
 
         if (workingDirectory != null && !workingDirectory.exists()) {
             throw new IOException(workingDirectory + " doesn't exist.");
         }
-        
+
         return executeInternal(command, environment, workingDirectory, streamHandler);
 
     }
@@ -171,6 +180,7 @@ public class DefaultExecutor implements Executor {
      * @see org.apache.commons.exec.Executor#execute(CommandLine,
      *      org.apache.commons.exec.ExecuteResultHandler)
      */
+    @Override
     public void execute(final CommandLine command, final ExecuteResultHandler handler)
             throws ExecuteException, IOException {
         execute(command, null, handler);
@@ -180,6 +190,7 @@ public class DefaultExecutor implements Executor {
      * @see org.apache.commons.exec.Executor#execute(CommandLine,
      *      java.util.Map, org.apache.commons.exec.ExecuteResultHandler)
      */
+    @Override
     public void execute(final CommandLine command, final Map<String, String> environment,
             final ExecuteResultHandler handler) throws ExecuteException, IOException {
 
@@ -193,6 +204,7 @@ public class DefaultExecutor implements Executor {
 
         final Runnable runnable = new Runnable()
         {
+            @Override
             public void run()
             {
                 int exitValue = Executor.INVALID_EXITVALUE;
@@ -212,30 +224,31 @@ public class DefaultExecutor implements Executor {
     }
 
     /** @see org.apache.commons.exec.Executor#setExitValue(int) */
+    @Override
     public void setExitValue(final int value) {
         this.setExitValues(new int[] {value});
     }
 
 
     /** @see org.apache.commons.exec.Executor#setExitValues(int[]) */
+    @Override
     public void setExitValues(final int[] values) {
         this.exitValues = values == null ? null : (int[]) values.clone();
     }
 
     /** @see org.apache.commons.exec.Executor#isFailure(int) */
+    @Override
     public boolean isFailure(final int exitValue) {
 
         if (this.exitValues == null) {
             return false;
         }
-        else if (this.exitValues.length == 0) {
+        if (this.exitValues.length == 0) {
             return this.launcher.isFailure(exitValue);
         }
-        else {
-            for (final int exitValue2 : this.exitValues) {
-                if (exitValue2 == exitValue) {
-                    return false;
-                }
+        for (final int exitValue2 : this.exitValues) {
+            if (exitValue2 == exitValue) {
+                return false;
             }
         }
         return true;
@@ -287,7 +300,7 @@ public class DefaultExecutor implements Executor {
     protected Thread getExecutorThread() {
         return executorThread;
     }
-    
+
     /**
      * Close the streams belonging to the given Process.
      *
@@ -383,7 +396,7 @@ public class DefaultExecutor implements Executor {
                 // Process.waitFor should clear interrupt status when throwing InterruptedException
                 // but we have to do that manually
                 Thread.interrupted();
-            }            
+            }
 
             if (watchdog != null) {
                 watchdog.stop();
@@ -409,7 +422,7 @@ public class DefaultExecutor implements Executor {
                     throw e;
                 } catch (final Exception e) {
                     // Java 1.5 does not support public IOException(String message, Throwable cause)
-                    IOException ioe = new IOException(e.getMessage());
+                    final IOException ioe = new IOException(e.getMessage());
                     ioe.initCause(e);
                     throw ioe;
                 }

@@ -1,4 +1,4 @@
-/* 
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  *  contributor license agreements.  See the NOTICE file distributed with
  *  this work for additional information regarding copyright ownership.
@@ -18,7 +18,7 @@
 
 package org.apache.commons.exec.environment;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -35,12 +35,11 @@ import org.apache.commons.exec.OS;
 import org.junit.Test;
 
 /**
- * @version $Id$
  */
 public class EnvironmentUtilsTest {
 
     /**
-     * Tests the behaviour of the EnvironmentUtils.toStrings()
+     * Tests the behavior of the EnvironmentUtils.toStrings()
      * when using a {@code null} environment.
      */
     @Test
@@ -48,7 +47,7 @@ public class EnvironmentUtilsTest {
         // check for a non-existing environment when passing null
         assertNull(EnvironmentUtils.toStrings(null));
         // check for an environment when filling in two variables
-        final Map<String, String> env = new HashMap<String, String>();
+        final Map<String, String> env = new HashMap<>();
         assertArrayEquals(new String[0], EnvironmentUtils.toStrings(env));
         env.put("foo2", "bar2");
         env.put("foo", "bar");
@@ -72,11 +71,11 @@ public class EnvironmentUtilsTest {
         final Map<String, String> procEnvironment = EnvironmentUtils.getProcEnvironment();
         // we assume that there is at least one environment variable
         // for this process, i.e. $JAVA_HOME
-        assertTrue("Expecting non-zero environment size", procEnvironment.size() > 0);
+        assertFalse("Expecting non-zero environment size", procEnvironment.isEmpty());
         final String[] envArgs = EnvironmentUtils.toStrings(procEnvironment);
         for (int i=0; i<envArgs.length; i++) {
             assertNotNull("Entry "+i+" should not be null",envArgs[i]);
-            assertTrue("Entry "+i+" should not be empty",envArgs[i].length() > 0);
+            assertFalse("Entry "+i+" should not be empty",envArgs[i].isEmpty());
             // System.out.println(envArgs[i]);
         }
     }
@@ -133,7 +132,7 @@ public class EnvironmentUtilsTest {
      */
     @Test
     public void testToStringWithNullKey() {
-        final Map<String, String> env = new HashMap<String, String>();
+        final Map<String, String> env = new HashMap<>();
         env.put(null, "TheNullKey");
         final String[] strings = EnvironmentUtils.toStrings(env);
         assertEquals(1, strings.length);
@@ -146,7 +145,7 @@ public class EnvironmentUtilsTest {
      */
     @Test
     public void testToStringWithNullValue() {
-        final Map<String, String> env = new HashMap<String, String>();
+        final Map<String, String> env = new HashMap<>();
         env.put("key", null);
         final String[] strings = EnvironmentUtils.toStrings(env);
         assertEquals(1, strings.length);

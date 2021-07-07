@@ -1,4 +1,4 @@
-/* 
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  *  contributor license agreements.  See the NOTICE file distributed with
  *  this work for additional information regarding copyright ownership.
@@ -32,14 +32,13 @@ import org.apache.commons.exec.util.StringUtils;
  * CommandLine objects help handling command lines specifying processes to
  * execute. The class can be used to a command line by an application.
  *
- * @version $Id$
  */
 public class CommandLine {
 
     /**
      * The arguments of the command.
      */
-    private final Vector<Argument> arguments = new Vector<Argument>();
+    private final Vector<Argument> arguments = new Vector<>();
 
     /**
      * The program to execute.
@@ -58,7 +57,7 @@ public class CommandLine {
 
     /**
      * Create a command line from a string.
-     * 
+     *
      * @param line the first element becomes the executable, the rest the arguments
      * @return the parsed command line
      * @throws IllegalArgumentException If line is null or all whitespace
@@ -76,22 +75,22 @@ public class CommandLine {
      * @throws IllegalArgumentException If line is null or all whitespace
      */
     public static CommandLine parse(final String line, final Map<String, ?> substitutionMap) {
-                
+
         if (line == null) {
             throw new IllegalArgumentException("Command line can not be null");
-        } else if (line.trim().length() == 0) {
-            throw new IllegalArgumentException("Command line can not be empty");
-        } else {
-            final String[] tmp = translateCommandline(line);
-
-            final CommandLine cl = new CommandLine(tmp[0]);
-            cl.setSubstitutionMap(substitutionMap);
-            for (int i = 1; i < tmp.length; i++) {
-                cl.addArgument(tmp[i]);
-            }
-
-            return cl;
         }
+        if (line.trim().isEmpty()) {
+            throw new IllegalArgumentException("Command line can not be empty");
+        }
+        final String[] tmp = translateCommandline(line);
+
+        final CommandLine cl = new CommandLine(tmp[0]);
+        cl.setSubstitutionMap(substitutionMap);
+        for (int i = 1; i < tmp.length; i++) {
+            cl.addArgument(tmp[i]);
+        }
+
+        return cl;
     }
 
     /**
@@ -127,7 +126,7 @@ public class CommandLine {
 
         if (other.getSubstitutionMap() != null)
         {
-            final Map<String, Object> omap = new HashMap<String, Object>();
+            final Map<String, Object> omap = new HashMap<>();
             this.substitutionMap = omap;
             final Iterator<String> iterator = other.substitutionMap.keySet().iterator();
             while (iterator.hasNext())
@@ -140,7 +139,7 @@ public class CommandLine {
 
     /**
      * Returns the executable.
-     * 
+     *
      * @return The executable
      */
     public String getExecutable() {
@@ -153,7 +152,7 @@ public class CommandLine {
     /**
      * Was a file being used to set the executable?
      *
-     * @return true if a file was used for setting the executable 
+     * @return true if a file was used for setting the executable
      */
     public boolean isFile() {
         return isFile;
@@ -161,7 +160,7 @@ public class CommandLine {
 
     /**
      * Add multiple arguments. Handles parsing of quotes and whitespace.
-     * 
+     *
      * @param addArguments An array of arguments
      * @return The command line itself
      */
@@ -190,8 +189,8 @@ public class CommandLine {
      * Add multiple arguments. Handles parsing of quotes and whitespace.
      * Please note that the parsing can have undesired side-effects therefore
      * it is recommended to build the command line incrementally.
-     * 
-     * @param addArguments An string containing multiple arguments. 
+     *
+     * @param addArguments An string containing multiple arguments.
      * @return The command line itself
      */
     public CommandLine addArguments(final String addArguments) {
@@ -254,7 +253,7 @@ public class CommandLine {
 
     /**
      * Returns the expanded and quoted command line arguments.
-     *  
+     *
      * @return The quoted arguments
      */
     public String[] getArguments() {
@@ -282,7 +281,7 @@ public class CommandLine {
     /**
      * Set the substitutionMap to expand variables in the
      * command line.
-     * 
+     *
      * @param substitutionMap the map
      */
     public void setSubstitutionMap(final Map<String, ?> substitutionMap) {
@@ -311,7 +310,7 @@ public class CommandLine {
     /**
      * Stringify operator returns the command line as a string.
      * Parameters are correctly quoted when containing a space or
-     * left untouched if the are already quoted. 
+     * left untouched if the are already quoted.
      *
      * @return the command line as single string
      */
@@ -342,7 +341,7 @@ public class CommandLine {
      *         parameter results in a zero sized array
      */
     private static String[] translateCommandline(final String toProcess) {
-        if (toProcess == null || toProcess.length() == 0) {
+        if (toProcess == null || toProcess.isEmpty()) {
             // no command? no string
             return new String[0];
         }
@@ -354,7 +353,7 @@ public class CommandLine {
         final int inDoubleQuote = 2;
         int state = normal;
         final StringTokenizer tok = new StringTokenizer(toProcess, "\"\' ", true);
-        final ArrayList<String> list = new ArrayList<String>();
+        final ArrayList<String> list = new ArrayList<>();
         StringBuilder current = new StringBuilder();
         boolean lastTokenHasBeenQuoted = false;
 
@@ -418,11 +417,11 @@ public class CommandLine {
     private String toCleanExecutable(final String dirtyExecutable) {
         if (dirtyExecutable == null) {
             throw new IllegalArgumentException("Executable can not be null");
-        } else if (dirtyExecutable.trim().length() == 0) {
-            throw new IllegalArgumentException("Executable can not be empty");
-        } else {
-            return StringUtils.fixFileSeparatorChar(dirtyExecutable);
         }
+        if (dirtyExecutable.trim().isEmpty()) {
+            throw new IllegalArgumentException("Executable can not be empty");
+        }
+        return StringUtils.fixFileSeparatorChar(dirtyExecutable);
     }
 
     /**

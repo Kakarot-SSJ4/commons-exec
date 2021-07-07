@@ -34,7 +34,6 @@ import org.apache.commons.exec.OS;
  * JVM or requires starting a process to get them running
  * an OS command line.
  *
- * @version $Id$
  */
 public class DefaultProcessingEnvironment {
 
@@ -217,13 +216,14 @@ public class DefaultProcessingEnvironment {
      */
     private Map<String, String> createEnvironmentMap() {
         if (OS.isFamilyWindows()) {
-            return new TreeMap<String, String>(new Comparator<String>() {
+            return new TreeMap<>(new Comparator<String>() {
+                @Override
                 public int compare(final String key0, final String key1) {
                     return key0.compareToIgnoreCase(key1);
                 }
             });
         }
-        return new HashMap<String, String>();
+        return new HashMap<>();
     }
 
 }

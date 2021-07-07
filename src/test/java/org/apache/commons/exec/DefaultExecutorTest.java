@@ -1,4 +1,4 @@
-/* 
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  *  contributor license agreements.  See the NOTICE file distributed with
  *  this work for additional information regarding copyright ownership.
@@ -28,7 +28,6 @@ import java.util.Map;
 import static org.junit.Assert.*;
 
 /**
- * @version $Id$
  */
 public class DefaultExecutorTest {
 
@@ -156,7 +155,7 @@ public class DefaultExecutorTest {
      */
     @Test
     public void testExecuteWithSingleEnvironmentVariable() throws Exception {
-        final Map<String, String> env = new HashMap<String, String>();
+        final Map<String, String> env = new HashMap<>();
         env.put("TEST_ENV_VAR", "XYZ");
 
         final CommandLine cl = new CommandLine(testScript);
@@ -335,7 +334,7 @@ public class DefaultExecutorTest {
     /**
      * [EXEC-68] Synchronously starts a short script with a Watchdog attached with an extremely large timeout. Checks
      * to see if the script terminated naturally or if it was killed by the Watchdog. Fail if killed by Watchdog.
-     * 
+     *
      * @throws Exception
      *             the test failed
      */
@@ -412,7 +411,7 @@ public class DefaultExecutorTest {
         final CommandLine cl = new CommandLine(nonExistingTestScript);
         final DefaultExecuteResultHandler resultHandler = new DefaultExecuteResultHandler() {
             @Override
-            public void onProcessFailed(ExecuteException e) {
+            public void onProcessFailed(final ExecuteException e) {
                 System.out.println("Process did not stop gracefully, had exception '" + e.getMessage() + "' while executing process");
                 super.onProcessFailed(e);
             }
@@ -473,14 +472,14 @@ public class DefaultExecutorTest {
       final ShutdownHookProcessDestroyer processDestroyer = new ShutdownHookProcessDestroyer();
       exec.setProcessDestroyer(processDestroyer);
 
-      assertTrue(processDestroyer.size() == 0);
+      assertTrue(processDestroyer.isEmpty());
       assertTrue(processDestroyer.isAddedAsShutdownHook() == false);
 
       final int exitValue = exec.execute(cl);
 
       assertEquals("FOO..", baos.toString().trim());
       assertFalse(exec.isFailure(exitValue));
-      assertTrue(processDestroyer.size() == 0);
+      assertTrue(processDestroyer.isEmpty());
       assertTrue(processDestroyer.isAddedAsShutdownHook() == false);
     }
 
@@ -500,7 +499,7 @@ public class DefaultExecutorTest {
       final ExecuteWatchdog watchdog = new ExecuteWatchdog(Integer.MAX_VALUE);
 
       assertTrue(exec.getProcessDestroyer() == null);
-      assertTrue(processDestroyer.size() == 0);
+      assertTrue(processDestroyer.isEmpty());
       assertTrue(processDestroyer.isAddedAsShutdownHook() == false);
 
       exec.setWatchdog(watchdog);
@@ -567,11 +566,9 @@ public class DefaultExecutorTest {
                     .println("The code samples to do that in windows look like a joke ... :-( .., no way I'm doing that");
             System.err.println("The test 'testExecuteWithRedirectedStreams' does not support the following OS : "
                     + System.getProperty("os.name"));
-            return;
         } else {
             System.err.println("The test 'testExecuteWithRedirectedStreams' does not support the following OS : "
                     + System.getProperty("os.name"));
-            return;
         }
     }
 
@@ -592,7 +589,7 @@ public class DefaultExecutorTest {
 
     /**
      * Start a process and connect it to no stream.
-     * 
+     *
      * @throws Exception
      *             the test failed
      */
@@ -616,16 +613,13 @@ public class DefaultExecutorTest {
         final File outfile = File.createTempFile("EXEC", ".test");
         outfile.deleteOnExit();
         final CommandLine cl = new CommandLine(testScript);
-        final FileOutputStream outAndErr = new FileOutputStream(outfile);
-        try {
+        try (FileOutputStream outAndErr = new FileOutputStream(outfile)) {
             final PumpStreamHandler pumpStreamHandler = new PumpStreamHandler(outAndErr);
             final DefaultExecutor executor = new DefaultExecutor();
             executor.setStreamHandler(pumpStreamHandler);
             final int exitValue = executor.execute(cl);
             assertFalse(exec.isFailure(exitValue));
             assertTrue(outfile.exists());
-        } finally {
-            outAndErr.close();
         }
     }
 
@@ -681,7 +675,7 @@ public class DefaultExecutorTest {
     public void testEnvironmentVariables() throws Exception {
         exec.execute(new CommandLine(environmentSript));
         final String environment = baos.toString().trim();
-        assertTrue("Found no environment variables", environment.length() > 0);
+        assertFalse("Found no environment variables", environment.isEmpty());
         assertFalse(environment.indexOf("NEW_VAR") >= 0);
     }
 
@@ -693,8 +687,7 @@ public class DefaultExecutorTest {
      */
     @Test
     public void testAddEnvironmentVariables() throws Exception {
-        final Map<String, String> myEnvVars = new HashMap<String, String>();
-        myEnvVars.putAll(EnvironmentUtils.getProcEnvironment());
+        final Map<String, String> myEnvVars = new HashMap<>(EnvironmentUtils.getProcEnvironment());
         myEnvVars.put("NEW_VAR","NEW_VAL");
         exec.execute(new CommandLine(environmentSript), myEnvVars);
         final String environment = baos.toString().trim();
@@ -704,8 +697,7 @@ public class DefaultExecutorTest {
 
     @Test
     public void testAddEnvironmentVariableEmbeddedQuote() throws Exception {
-        final Map<String, String> myEnvVars = new HashMap<String, String>();
-        myEnvVars.putAll(EnvironmentUtils.getProcEnvironment());
+        final Map<String, String> myEnvVars = new HashMap<>(EnvironmentUtils.getProcEnvironment());
         final String name = "NEW_VAR";
         final String value = "NEW_\"_VAL";
         myEnvVars.put(name,value);
@@ -731,7 +723,7 @@ public class DefaultExecutorTest {
 
         // make a plain-vanilla test
         for (int i=0; i<100; i++) {
-            final Map<String, String> env = new HashMap<String, String>();
+            final Map<String, String> env = new HashMap<>();
             env.put("TEST_ENV_VAR", Integer.toString(i));
             final CommandLine cl = new CommandLine(testScript);
             final int exitValue = exec.execute(cl,env);
@@ -742,7 +734,7 @@ public class DefaultExecutorTest {
 
         // now be nasty and use the watchdog to kill out sub-processes
         for (int i=0; i<100; i++) {
-            final Map<String, String> env = new HashMap<String, String>();
+            final Map<String, String> env = new HashMap<>();
             env.put("TEST_ENV_VAR", Integer.toString(i));
             final DefaultExecuteResultHandler resultHandler = new DefaultExecuteResultHandler();
             final CommandLine cl = new CommandLine(foreverTestScript);

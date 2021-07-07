@@ -1,4 +1,4 @@
-/* 
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  *  contributor license agreements.  See the NOTICE file distributed with
  *  this work for additional information regarding copyright ownership.
@@ -27,7 +27,6 @@ import org.apache.commons.exec.CommandLine;
  * A command launcher that proxies another command launcher. Sub-classes
  * override exec(args, env, workdir)
  *
- * @version $Id$
  */
 public abstract class CommandLauncherProxy extends CommandLauncherImpl {
 
@@ -40,7 +39,7 @@ public abstract class CommandLauncherProxy extends CommandLauncherImpl {
     /**
      * Launches the given command in a new process. Delegates this method to the
      * proxied launcher
-     * 
+     *
      * @param cmd
      *            the command line to execute as an array of strings
      * @param env

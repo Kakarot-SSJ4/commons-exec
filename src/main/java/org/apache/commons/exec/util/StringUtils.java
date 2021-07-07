@@ -1,4 +1,4 @@
-/* 
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  *  contributor license agreements.  See the NOTICE file distributed with
  *  this work for additional information regarding copyright ownership.
@@ -32,7 +32,6 @@ import java.util.StringTokenizer;
  * This class is not part of the public API and could change without
  * warning.
  *
- * @version $Id$
  */
 public class StringUtils {
 
@@ -71,11 +70,11 @@ public class StringUtils {
 
         final StringBuffer argBuf = new StringBuffer();
 
-        if (argStr == null || argStr.length() == 0) {
+        if (argStr == null || argStr.isEmpty()) {
             return argBuf;
         }
 
-        if (vars == null || vars.size() == 0) {
+        if (vars == null || vars.isEmpty()) {
             return argBuf.append(argStr);
         }
 
@@ -98,11 +97,10 @@ public class StringUtils {
 
                         for (++cIdx; cIdx < argStr.length(); ++cIdx) {
                             ch = argStr.charAt(cIdx);
-                            if (ch == '_' || ch == '.' || ch == '-' || ch == '+' || Character.isLetterOrDigit(ch)) {
-                                nameBuf.append(ch);
-                            } else {
+                            if ((ch != '_') && (ch != '.') && (ch != '-') && (ch != '+') && !Character.isLetterOrDigit(ch)) {
                                 break;
                             }
+                            nameBuf.append(ch);
                         }
 
                         if (nameBuf.length() >= 0) {
@@ -116,19 +114,18 @@ public class StringUtils {
                                 value = fixFileSeparatorChar(((File) temp).getAbsolutePath());
                             }
                             else {
-                                value = temp != null ? temp.toString() : null;    
+                                value = temp != null ? temp.toString() : null;
                             }
 
                             if (value != null) {
                                 argBuf.append(value);
                             } else {
-                                if (isLenient) {
-                                    // just append the unresolved variable declaration
-                                    argBuf.append("${").append(nameBuf.toString()).append("}");
-                                } else {
+                                if (!isLenient) {
                                     // complain that no variable was found
                                     throw new RuntimeException("No value found for : " + nameBuf);
                                 }
+                                // just append the unresolved variable declaration
+                                argBuf.append("${").append(nameBuf.toString()).append("}");
                             }
 
                             del = argStr.charAt(cIdx);
@@ -167,7 +164,7 @@ public class StringUtils {
      */
     public static String[] split(final String input, final String splitChar) {
         final StringTokenizer tokens = new StringTokenizer(input, splitChar);
-        final List<String> strList = new ArrayList<String>();
+        final List<String> strList = new ArrayList<>();
         while (tokens.hasMoreTokens()) {
             strList.add(tokens.nextToken());
         }
@@ -177,14 +174,14 @@ public class StringUtils {
     /**
      * Fixes the file separator char for the target platform
      * using the following replacement.
-     * 
+     *
      * <ul>
      *  <li>'/' &#x2192; File.separatorChar</li>
      *  <li>'\\' &#x2192; File.separatorChar</li>
      * </ul>
      *
      * @param arg the argument to fix
-     * @return the transformed argument 
+     * @return the transformed argument
      */
     public static String fixFileSeparatorChar(final String arg) {
         return arg.replace(SLASH_CHAR, File.separatorChar).replace(
@@ -229,7 +226,7 @@ public class StringUtils {
         while (cleanedArgument.startsWith(SINGLE_QUOTE) || cleanedArgument.startsWith(DOUBLE_QUOTE)) {
             cleanedArgument = cleanedArgument.substring(1);
         }
-        
+
         while (cleanedArgument.endsWith(SINGLE_QUOTE) || cleanedArgument.endsWith(DOUBLE_QUOTE)) {
             cleanedArgument = cleanedArgument.substring(0, cleanedArgument.length() - 1);
         }
@@ -242,13 +239,13 @@ public class StringUtils {
             }
             return buf.append(SINGLE_QUOTE).append(cleanedArgument).append(
                     SINGLE_QUOTE).toString();
-        } else if (cleanedArgument.indexOf(SINGLE_QUOTE) > -1
+        }
+        if (cleanedArgument.indexOf(SINGLE_QUOTE) > -1
                 || cleanedArgument.indexOf(" ") > -1) {
             return buf.append(DOUBLE_QUOTE).append(cleanedArgument).append(
                     DOUBLE_QUOTE).toString();
-        } else {
-            return cleanedArgument;
         }
+        return cleanedArgument;
     }
 
     /**

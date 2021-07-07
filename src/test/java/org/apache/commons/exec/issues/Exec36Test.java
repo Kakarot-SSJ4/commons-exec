@@ -39,7 +39,6 @@ import org.junit.Test;
 /**
  * Test EXEC-36 see https://issues.apache.org/jira/browse/EXEC-36
  *
- * @version $Id$
  */
 public class Exec36Test {
 
@@ -102,7 +101,6 @@ public class Exec36Test {
         }
         else {
             System.err.println("The test 'testExec36_1' does not support the following OS : " + System.getProperty("os.name"));
-            return;
         }
     }
 
@@ -139,7 +137,7 @@ public class Exec36Test {
 
         CommandLine cmdl;
         final File file = new File("/Documents and Settings/myusername/Local Settings/Temp/netfx.log");
-        final Map<String, File> map = new HashMap<String, File>();
+        final Map<String, File> map = new HashMap<>();
         map.put("FILE", file);
 
         cmdl = new CommandLine(printArgsScript);

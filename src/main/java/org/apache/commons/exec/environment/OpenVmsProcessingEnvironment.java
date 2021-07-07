@@ -1,4 +1,4 @@
-/* 
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -28,7 +28,6 @@ package org.apache.commons.exec.environment;
  * Helper class to determine the environment variable
  * for VMS.
  *
- * @version $Id$
  * @deprecated No longer needed
  */
 @Deprecated
@@ -36,7 +35,7 @@ public class OpenVmsProcessingEnvironment extends DefaultProcessingEnvironment {
 
     /*
      * Hopefully removing super-class overrides won't cause Clirr error.
-     * If necessary can just delegate to super-class. 
+     * If necessary can just delegate to super-class.
      */
 
 //    /**
@@ -44,7 +43,7 @@ public class OpenVmsProcessingEnvironment extends DefaultProcessingEnvironment {
 //     *
 //     * @return a map containing the environment variables
 //     * @throws IOException the operation failed
-//     */    
+//     */
 //    @Override
 //    protected Map<String, String> createProcEnvironment() throws IOException {
 //        if (procEnvironment == null) {
@@ -60,7 +59,7 @@ public class OpenVmsProcessingEnvironment extends DefaultProcessingEnvironment {
 //     * variables.
 //     *
 //     * @return the command line
-//     */    
+//     */
 //    @Override
 //    protected CommandLine getProcEnvCommand() {
 //        final CommandLine commandLine = new CommandLine("show");

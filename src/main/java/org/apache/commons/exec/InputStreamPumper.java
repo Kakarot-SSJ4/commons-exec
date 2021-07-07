@@ -26,7 +26,6 @@ import org.apache.commons.exec.util.DebugUtils;
 /**
  * Copies all data from an System.input stream to an output stream of the executed process.
  *
- * @version $Id$
  */
 public class InputStreamPumper implements Runnable {
 
@@ -59,6 +58,7 @@ public class InputStreamPumper implements Runnable {
      * Copies data from the input stream to the output stream. Terminates as
      * soon as the input stream is closed or an error occurs.
      */
+    @Override
     public void run() {
         try {
             while (!stop) {
@@ -71,7 +71,6 @@ public class InputStreamPumper implements Runnable {
         } catch (final Exception e) {
             final String msg = "Got exception while reading/writing the stream";
             DebugUtils.handleException(msg ,e);
-        } finally {
         }
     }
 

@@ -25,13 +25,12 @@ import java.util.Map;
  * Helper classes to manipulate maps to pass substition map to the CommandLine. This class is not part of the public API
  * and could change without warning.
  *
- * @version $Id$
  */
 public class MapUtils
 {
     /**
      * Clones a map.
-     * 
+     *
      * @param source
      *            the Map to clone
      * @param <K>
@@ -40,20 +39,13 @@ public class MapUtils
      *            the map value type
      * @return the cloned map
      */
-   public static <K, V> Map<K, V> copy(final Map<K, V> source) {
-
-        if (source == null) {
-            return null;
-        }
-
-        final Map<K, V> result = new HashMap<K, V>();
-        result.putAll(source);
-        return result;
+    public static <K, V> Map<K, V> copy(final Map<K, V> source) {
+        return source == null ? null : new HashMap<>(source);
     }
 
     /**
      * Clones a map and prefixes the keys in the clone, e.g. for mapping "JAVA_HOME" to "env.JAVA_HOME" to simulate the
-     * behaviour of Ant.
+     * behavior of Ant.
      *
      * @param source
      *            the source map
@@ -71,7 +63,7 @@ public class MapUtils
             return null;
         }
 
-        final Map<String, V> result = new HashMap<String, V>();
+        final Map<String, V> result = new HashMap<>();
 
         for (final Map.Entry<K, V> entry : source.entrySet()) {
             final K key = entry.getKey();
@@ -99,17 +91,17 @@ public class MapUtils
 
         Map<K, V> result = null;
 
-        if (lhs == null || lhs.size() == 0) {
+        if (lhs == null || lhs.isEmpty()) {
             result = copy(rhs);
         }
-        else if (rhs == null || rhs.size() == 0) {
+        else if (rhs == null || rhs.isEmpty()) {
             result = copy(lhs);
         }
         else {
             result = copy(lhs);
             result.putAll(rhs);
         }
-        
+
         return result;
     }
 }

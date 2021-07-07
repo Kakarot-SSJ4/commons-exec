@@ -1,4 +1,4 @@
-/* 
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  *  contributor license agreements.  See the NOTICE file distributed with
  *  this work for additional information regarding copyright ownership.
@@ -30,11 +30,10 @@ import java.io.PipedOutputStream;
  * of the parent process. If output or error stream are set to null, any feedback
  * from that stream will be lost.
  *
- * @version $Id$
  */
 public class PumpStreamHandler implements ExecuteStreamHandler {
 
-    private static final long STOP_TIMEOUT_ADDITION = 2000L;
+    private static final long STOP_TIMEOUT_ADDITION_MILLIS = 2000L;
 
     private Thread outputThread;
 
@@ -111,6 +110,7 @@ public class PumpStreamHandler implements ExecuteStreamHandler {
      *
      * @param is the <CODE>InputStream</CODE>.
      */
+    @Override
     public void setProcessOutputStream(final InputStream is) {
         if (out != null) {
             createProcessOutputPump(is, out);
@@ -123,6 +123,7 @@ public class PumpStreamHandler implements ExecuteStreamHandler {
      *
      * @param is the <CODE>InputStream</CODE>.
      */
+    @Override
     public void setProcessErrorStream(final InputStream is) {
         if (err != null) {
             createProcessErrorPump(is, err);
@@ -135,6 +136,7 @@ public class PumpStreamHandler implements ExecuteStreamHandler {
      *
      * @param os the <CODE>OutputStream</CODE>.
      */
+    @Override
     public void setProcessInputStream(final OutputStream os) {
         if (input != null) {
             if (input == System.in) {
@@ -155,6 +157,7 @@ public class PumpStreamHandler implements ExecuteStreamHandler {
     /**
      * Start the <CODE>Thread</CODE>s.
      */
+    @Override
     public void start() {
         if (outputThread != null) {
             outputThread.start();
@@ -171,6 +174,7 @@ public class PumpStreamHandler implements ExecuteStreamHandler {
      * Stop pumping the streams. When a timeout is specified it it is not guaranteed that the
      * pumper threads are cleanly terminated.
      */
+    @Override
     public void stop() throws IOException {
 
         if (inputStreamPumper != null) {
@@ -278,20 +282,20 @@ public class PumpStreamHandler implements ExecuteStreamHandler {
      * is created to be thrown to the caller.
      *
      * @param thread  the thread to be stopped
-     * @param timeout the time in ms to wait to join
+     * @param timeoutMillis the time in ms to wait to join
      */
-    protected void stopThread(final Thread thread, final long timeout) {
+    protected void stopThread(final Thread thread, final long timeoutMillis) {
 
         if (thread != null) {
             try {
-                if (timeout == 0) {
+                if (timeoutMillis == 0) {
                     thread.join();
                 } else {
-                    final long timeToWait = timeout + STOP_TIMEOUT_ADDITION;
-                    final long startTime = System.currentTimeMillis();
-                    thread.join(timeToWait);
-                    if (System.currentTimeMillis() > startTime + timeToWait) {
-                        final String msg = "The stop timeout of " + timeout + " ms was exceeded";
+                    final long timeToWaitMillis = timeoutMillis + STOP_TIMEOUT_ADDITION_MILLIS;
+                    final long startTimeMillis = System.currentTimeMillis();
+                    thread.join(timeToWaitMillis);
+                    if (System.currentTimeMillis() > startTimeMillis + timeToWaitMillis) {
+                        final String msg = "The stop timeout of " + timeoutMillis + " ms was exceeded";
                         caught = new ExecuteException(msg, Executor.INVALID_EXITVALUE);
                     }
                 }

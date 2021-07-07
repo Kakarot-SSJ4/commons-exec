@@ -1,4 +1,4 @@
-/* 
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  *  contributor license agreements.  See the NOTICE file distributed with
  *  this work for additional information regarding copyright ownership.
@@ -27,7 +27,6 @@ import org.apache.commons.exec.util.DebugUtils;
 /**
  * Copies all data from an input stream to an output stream.
  *
- * @version $Id$
  */
 public class StreamPumper implements Runnable {
 
@@ -40,7 +39,7 @@ public class StreamPumper implements Runnable {
     /** the output stream to pmp into */
     private final OutputStream os;
 
-    /** the size of the internal buffer for copying the streams */ 
+    /** the size of the internal buffer for copying the streams */
     private final int size;
 
     /** was the end of the stream reached */
@@ -48,10 +47,10 @@ public class StreamPumper implements Runnable {
 
     /** close the output stream when exhausted */
     private final boolean closeWhenExhausted;
-    
+
     /**
      * Create a new stream pumper.
-     * 
+     *
      * @param is input stream to read data from
      * @param os output stream to write data to.
      * @param closeWhenExhausted if true, the output stream will be closed when the input is exhausted.
@@ -82,7 +81,7 @@ public class StreamPumper implements Runnable {
 
     /**
      * Create a new stream pumper.
-     * 
+     *
      * @param is input stream to read data from
      * @param os output stream to write data to.
      */
@@ -94,6 +93,7 @@ public class StreamPumper implements Runnable {
      * Copies data from the input stream to the output stream. Terminates as
      * soon as the input stream is closed or an error occurs.
      */
+    @Override
     public void run() {
         synchronized (this) {
             // Just in case this object is reused in the future
@@ -127,7 +127,7 @@ public class StreamPumper implements Runnable {
 
     /**
      * Tells whether the end of the stream has been reached.
-     * 
+     *
      * @return true is the stream has been exhausted.
      */
     public synchronized boolean isFinished() {
@@ -136,7 +136,7 @@ public class StreamPumper implements Runnable {
 
     /**
      * This method blocks until the stream pumper finishes.
-     * 
+     *
      * @throws InterruptedException
      *                if any thread interrupted the current thread before or while the current thread was waiting for a
      *                notification.

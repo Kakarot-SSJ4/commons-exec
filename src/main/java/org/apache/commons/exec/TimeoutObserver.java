@@ -1,4 +1,4 @@
-/* 
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  *  contributor license agreements.  See the NOTICE file distributed with
  *  this work for additional information regarding copyright ownership.
@@ -20,16 +20,15 @@ package org.apache.commons.exec;
 
 /**
  * Interface for classes that want to be notified by Watchdog.
- * 
+ *
  * @see org.apache.commons.exec.Watchdog
  *
- * @version $Id$
  */
 public interface TimeoutObserver {
 
     /**
      * Called when the watchdog times out.
-     * 
+     *
      * @param w the watchdog that timed out.
      */
     void timeoutOccured(Watchdog w);

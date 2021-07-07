@@ -22,7 +22,6 @@ import java.util.Locale;
  * Condition that tests the OS type.
  *
  * Copied and adapted from Apache Ant 1.9.6 from org.apache.tools.ant.taskdefs.condition.OS.
- * @version $Id$
  */
 public final class OS {
 
@@ -204,7 +203,7 @@ public final class OS {
             if (family != null) {
                 //windows probing logic relies on the word 'windows' in
                 //the OS
-                boolean isWindows = OS_NAME.contains(FAMILY_WINDOWS);
+                final boolean isWindows = OS_NAME.contains(FAMILY_WINDOWS);
                 boolean is9x = false;
                 boolean isNT = false;
                 if (isWindows) {

@@ -54,7 +54,7 @@ int exitValue = executor.execute(cmdLine);
 
   You successfully printed your first PDF document but at the end an exception is thrown - what
   happend? Oops, Acrobat Reader returned an exit value of '1' on success which is usually
-  considered as an execution failure. So we have to tweak our code to fix this odd behaviour -
+  considered as an execution failure. So we have to tweak our code to fix this odd behavior -
   we define the exit value of "1" to be considered as successful execution.
 
 +----------------------------------------------------------------------------
@@ -157,7 +157,7 @@ cmdLine.addArgument("/h");
 cmdLine.addArgument("${file}");
 HashMap map = new HashMap();
 map.put("file", new File("invoice.pdf"));
-commandLine.setSubstitutionMap(map);
+cmdLine.setSubstitutionMap(map);
 
 DefaultExecuteResultHandler resultHandler = new DefaultExecuteResultHandler();
 
@@ -175,4 +175,4 @@ int exitValue = resultHandler.waitFor();
 * Get Your Hands Dirty
 
   A tutorial is nice but executing the tutorial code is even nicer. You find
-  the ready-to-run tutorial under {{{http://commons.apache.org/exec/xref-test/org/apache/commons/exec/TutorialTest.html}src/test/java/org/apache/commons/exec/TutorialTest.java}}.
+  the ready-to-run tutorial under {{{https://commons.apache.org/exec/xref-test/org/apache/commons/exec/TutorialTest.html}src/test/java/org/apache/commons/exec/TutorialTest.java}}.

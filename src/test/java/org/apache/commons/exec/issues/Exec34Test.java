@@ -34,7 +34,6 @@ import org.junit.Test;
 /**
  * EXEC-34 https://issues.apache.org/jira/browse/EXEC-34
  *
- * @version $Id$
  */
 public class Exec34Test {
 
@@ -54,7 +53,7 @@ public class Exec34Test {
     public void testExec34_1() throws Exception {
 
         final CommandLine cmdLine = new CommandLine(pingScript);
-        cmdLine.addArgument("10"); // sleep 10 secs
+        cmdLine.addArgument("10"); // sleep 10 seconds
 
         final ExecuteWatchdog watchdog = new ExecuteWatchdog(Integer.MAX_VALUE);
         final DefaultExecuteResultHandler handler = new DefaultExecuteResultHandler();
@@ -76,7 +75,7 @@ public class Exec34Test {
     public void testExec34_2() throws Exception {
 
         final CommandLine cmdLine = new CommandLine(pingScript);
-        cmdLine.addArgument("10"); // sleep 10 secs
+        cmdLine.addArgument("10"); // sleep 10 seconds
 
         final ExecuteWatchdog watchdog = new ExecuteWatchdog(5000);
         final DefaultExecuteResultHandler handler = new DefaultExecuteResultHandler();

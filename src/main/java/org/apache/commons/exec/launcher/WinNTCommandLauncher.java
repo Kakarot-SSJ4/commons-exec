@@ -1,4 +1,4 @@
-/* 
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  *  contributor license agreements.  See the NOTICE file distributed with
  *  this work for additional information regarding copyright ownership.
@@ -28,7 +28,6 @@ import org.apache.commons.exec.CommandLine;
  * A command launcher for Windows XP/2000/NT that uses 'cmd.exe' when launching
  * commands in directories other than the current working directory.
  *
- * @version $Id$
  */
 public class WinNTCommandLauncher extends CommandLauncherProxy {
     public WinNTCommandLauncher(final CommandLauncher launcher) {
@@ -38,7 +37,7 @@ public class WinNTCommandLauncher extends CommandLauncherProxy {
     /**
      * Launches the given command in a new process, in the given working
      * directory.
-     * 
+     *
      * @param cmd
      *            the command line to execute as an array of strings
      * @param env

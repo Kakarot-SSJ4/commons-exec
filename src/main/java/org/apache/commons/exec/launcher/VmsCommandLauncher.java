@@ -1,4 +1,4 @@
-/* 
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  *  contributor license agreements.  See the NOTICE file distributed with
  *  this work for additional information regarding copyright ownership.
@@ -34,7 +34,6 @@ import org.apache.commons.exec.util.StringUtils;
  * before launching commands. This is due to limitations of both the DCL
  * interpreter and the Java VM implementation.
  *
- * @version $Id$
  */
 public class VmsCommandLauncher extends Java13CommandLauncher {
 
@@ -82,10 +81,7 @@ public class VmsCommandLauncher extends Java13CommandLauncher {
             throws IOException {
         final File script = File.createTempFile("EXEC", ".TMP");
         script.deleteOnExit();
-        PrintWriter out = null;
-        try {
-            out = new PrintWriter(new FileWriter(script.getAbsolutePath(),true));
-
+        try (PrintWriter out = new PrintWriter(new FileWriter(script.getAbsolutePath(),true))) {
             // add the environment as global symbols for the DCL script
             if (env != null) {
                 final Set<Entry<String, String>> entries = env.entrySet();
@@ -117,7 +113,7 @@ public class VmsCommandLauncher extends Java13CommandLauncher {
             if (cmd.isFile()) {// We assume it is it a script file
                 out.print("$ @");
                 // This is a bit crude, but seems to work
-                final String parts[] = StringUtils.split(command,"/");
+                final String[] parts = StringUtils.split(command,"/");
                 out.print(parts[0]); // device
                 out.print(":[");
                 out.print(parts[1]); // top level directory
@@ -130,7 +126,7 @@ public class VmsCommandLauncher extends Java13CommandLauncher {
                 out.print(parts[lastPart]);
             } else {
                 out.print("$ ");
-                out.print(command);                
+                out.print(command);
             }
             final String[] args = cmd.getArguments();
             for (final String arg : args) {
@@ -138,10 +134,6 @@ public class VmsCommandLauncher extends Java13CommandLauncher {
                 out.print(arg);
             }
             out.println();
-        } finally {
-            if (out != null) {
-                out.close();
-            }
         }
         return script;
     }

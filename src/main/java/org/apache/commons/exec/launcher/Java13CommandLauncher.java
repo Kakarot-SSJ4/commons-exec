@@ -1,4 +1,4 @@
-/* 
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  *  contributor license agreements.  See the NOTICE file distributed with
  *  this work for additional information regarding copyright ownership.
@@ -29,7 +29,6 @@ import org.apache.commons.exec.environment.EnvironmentUtils;
  * A command launcher for JDK/JRE 1.3 (and higher). Uses the built-in
  * Runtime.exec() command
  *
- * @version $Id$
  */
 public class Java13CommandLauncher extends CommandLauncherImpl {
 
@@ -42,7 +41,7 @@ public class Java13CommandLauncher extends CommandLauncherImpl {
     /**
      * Launches the given command in a new process, in the given working
      * directory
-     * 
+     *
      * @param cmd
      *            the command line to execute as an array of strings
      * @param env

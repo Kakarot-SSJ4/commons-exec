@@ -1,4 +1,4 @@
-/* 
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  *  contributor license agreements.  See the NOTICE file distributed with
  *  this work for additional information regarding copyright ownership.
@@ -23,7 +23,6 @@ import org.apache.commons.exec.OS;
 /**
  * Builds a command launcher for the OS and JVM we are running under.
  *
- * @version $Id$
  */
 public final class CommandLauncherFactory {
 
